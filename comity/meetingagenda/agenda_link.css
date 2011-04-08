@@ -1,0 +1,53 @@
+<style type="text/css">
+
+.agenda_link_topic {
+padding-left: 165px;
+}
+
+.agenda_link_motion {
+padding-left: 150px;
+}
+
+.topic_notes{
+ padding-left: 115px;
+
+}
+
+.motion_proposal{
+ padding-left: 95px;
+  
+
+}
+.collapsibleregioninner{
+    padding-top: 10px;
+ padding-left: 50px;
+
+
+}
+
+
+.comity_list .fitem .felement {
+
+ width:auto;
+}
+
+.comity_list .fitem{
+display:inline-block;
+float:left;
+width:20%;
+clear:none;
+
+margin-bottom:0;
+margin-top:0;
+
+}
+.comity_list .collapsibleregion{
+align:left;
+text-align:left;
+display:inline-block;
+float:left;
+clear:none;
+}
+
+
+</style>

@@ -1,0 +1,7 @@
+.cornerBox { position: relative; background: #cfcfcf; width: 100%; }
+.corner { position: absolute; width: 10px; height: 10px; background: url('../pix/corners.gif') no-repeat; font-size: 0%; }
+.cornerBoxInner { padding: 10px; }
+.TL { top: 0; left: 0; background-position: 0 0; }
+.TR { top: 0; right: 0; background-position: -10px 0; }
+.BL { bottom: 0; left: 0; background-position: 0 -10px; }
+.BR { bottom: 0; right: 0; background-position: -10px -10px; }

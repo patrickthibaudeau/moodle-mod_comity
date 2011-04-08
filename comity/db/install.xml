@@ -1,0 +1,208 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<XMLDB PATH="mod/comity/db" VERSION="20110311" COMMENT="XMLDB file for Moodle mod/comity"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:noNamespaceSchemaLocation="../../../lib/xmldb/xmldb.xsd"
+>
+  <TABLES>
+    <TABLE NAME="comity" COMMENT="Default comment for comity, please edit me" NEXT="comity_members">
+      <FIELDS>
+        <FIELD NAME="id" TYPE="int" LENGTH="10" NOTNULL="true" UNSIGNED="true" SEQUENCE="true" NEXT="course"/>
+        <FIELD NAME="course" TYPE="int" LENGTH="10" NOTNULL="true" UNSIGNED="true" SEQUENCE="false" COMMENT="Course comity activity belongs to" PREVIOUS="id" NEXT="name"/>
+        <FIELD NAME="name" TYPE="char" LENGTH="255" NOTNULL="true" SEQUENCE="false" COMMENT="name field for moodle instances" PREVIOUS="course" NEXT="timecreated"/>
+        <FIELD NAME="timecreated" TYPE="int" LENGTH="10" NOTNULL="true" UNSIGNED="true" SEQUENCE="false" PREVIOUS="name" NEXT="timemodified"/>
+        <FIELD NAME="timemodified" TYPE="int" LENGTH="10" NOTNULL="true" UNSIGNED="true" SEQUENCE="false" PREVIOUS="timecreated" NEXT="description"/>
+        <FIELD NAME="description" TYPE="text" LENGTH="big" NOTNULL="false" SEQUENCE="false" PREVIOUS="timemodified" NEXT="intro"/>
+        <FIELD NAME="intro" TYPE="text" LENGTH="small" NOTNULL="true" SEQUENCE="false" PREVIOUS="description" NEXT="introformat"/>
+        <FIELD NAME="introformat" TYPE="int" LENGTH="4" NOTNULL="false" UNSIGNED="true" DEFAULT="0" SEQUENCE="false" PREVIOUS="intro"/>
+      </FIELDS>
+      <KEYS>
+        <KEY NAME="primary" TYPE="primary" FIELDS="id"/>
+      </KEYS>
+    </TABLE>
+    <TABLE NAME="comity_members" COMMENT="DB for members" PREVIOUS="comity" NEXT="comity_files">
+      <FIELDS>
+        <FIELD NAME="id" TYPE="int" LENGTH="10" NOTNULL="true" UNSIGNED="true" SEQUENCE="true" NEXT="comity_id"/>
+        <FIELD NAME="comity_id" TYPE="int" LENGTH="20" NOTNULL="false" UNSIGNED="true" SEQUENCE="false" PREVIOUS="id" NEXT="user_id"/>
+        <FIELD NAME="user_id" TYPE="int" LENGTH="20" NOTNULL="false" UNSIGNED="true" SEQUENCE="false" PREVIOUS="comity_id" NEXT="role_id"/>
+        <FIELD NAME="role_id" TYPE="int" LENGTH="2" NOTNULL="false" UNSIGNED="true" SEQUENCE="false" PREVIOUS="user_id"/>
+      </FIELDS>
+      <KEYS>
+        <KEY NAME="primary" TYPE="primary" FIELDS="id"/>
+      </KEYS>
+    </TABLE>
+    <TABLE NAME="comity_files" COMMENT="Table for file uploads" PREVIOUS="comity_members" NEXT="comity_events">
+      <FIELDS>
+        <FIELD NAME="id" TYPE="int" LENGTH="10" NOTNULL="true" UNSIGNED="true" SEQUENCE="true" NEXT="comity_id"/>
+        <FIELD NAME="comity_id" TYPE="int" LENGTH="20" NOTNULL="false" UNSIGNED="true" SEQUENCE="false" PREVIOUS="id" NEXT="private"/>
+        <FIELD NAME="private" TYPE="int" LENGTH="1" NOTNULL="false" UNSIGNED="true" SEQUENCE="false" PREVIOUS="comity_id" NEXT="user_id"/>
+        <FIELD NAME="user_id" TYPE="int" LENGTH="20" NOTNULL="false" UNSIGNED="true" SEQUENCE="false" PREVIOUS="private" NEXT="timemodified"/>
+        <FIELD NAME="timemodified" TYPE="int" LENGTH="20" NOTNULL="false" UNSIGNED="true" SEQUENCE="false" PREVIOUS="user_id" NEXT="name"/>
+        <FIELD NAME="name" TYPE="char" LENGTH="255" NOTNULL="false" SEQUENCE="false" PREVIOUS="timemodified" NEXT="parent"/>
+        <FIELD NAME="parent" TYPE="int" LENGTH="20" NOTNULL="false" UNSIGNED="false" SEQUENCE="false" PREVIOUS="name" NEXT="type"/>
+        <FIELD NAME="type" TYPE="int" LENGTH="1" NOTNULL="false" UNSIGNED="false" SEQUENCE="false" COMMENT="0=folder 1=file" PREVIOUS="parent"/>
+      </FIELDS>
+      <KEYS>
+        <KEY NAME="primary" TYPE="primary" FIELDS="id"/>
+      </KEYS>
+    </TABLE>
+    <TABLE NAME="comity_events" COMMENT="events for comity module" PREVIOUS="comity_files" NEXT="comity_planner">
+      <FIELDS>
+        <FIELD NAME="id" TYPE="int" LENGTH="10" NOTNULL="true" UNSIGNED="true" SEQUENCE="true" NEXT="comity_id"/>
+        <FIELD NAME="comity_id" TYPE="int" LENGTH="20" NOTNULL="false" UNSIGNED="true" SEQUENCE="false" PREVIOUS="id" NEXT="user_id"/>
+        <FIELD NAME="user_id" TYPE="int" LENGTH="20" NOTNULL="false" UNSIGNED="true" SEQUENCE="false" PREVIOUS="comity_id" NEXT="day"/>
+        <FIELD NAME="day" TYPE="int" LENGTH="2" NOTNULL="false" UNSIGNED="true" SEQUENCE="false" PREVIOUS="user_id" NEXT="month"/>
+        <FIELD NAME="month" TYPE="int" LENGTH="2" NOTNULL="false" UNSIGNED="true" SEQUENCE="false" PREVIOUS="day" NEXT="year"/>
+        <FIELD NAME="year" TYPE="int" LENGTH="4" NOTNULL="false" UNSIGNED="true" SEQUENCE="false" PREVIOUS="month" NEXT="starthour"/>
+        <FIELD NAME="starthour" TYPE="int" LENGTH="2" NOTNULL="false" UNSIGNED="true" SEQUENCE="false" PREVIOUS="year" NEXT="startminutes"/>
+        <FIELD NAME="startminutes" TYPE="int" LENGTH="2" NOTNULL="false" UNSIGNED="true" SEQUENCE="false" PREVIOUS="starthour" NEXT="endhour"/>
+        <FIELD NAME="endhour" TYPE="int" LENGTH="2" NOTNULL="false" UNSIGNED="true" SEQUENCE="false" PREVIOUS="startminutes" NEXT="endminutes"/>
+        <FIELD NAME="endminutes" TYPE="int" LENGTH="2" NOTNULL="false" UNSIGNED="true" SEQUENCE="false" PREVIOUS="endhour" NEXT="summary"/>
+        <FIELD NAME="summary" TYPE="text" LENGTH="small" NOTNULL="false" SEQUENCE="false" PREVIOUS="endminutes" NEXT="description"/>
+        <FIELD NAME="description" TYPE="text" LENGTH="big" NOTNULL="false" SEQUENCE="false" PREVIOUS="summary" NEXT="stamp_start"/>
+        <FIELD NAME="stamp_start" TYPE="int" LENGTH="20" NOTNULL="false" UNSIGNED="true" SEQUENCE="false" PREVIOUS="description" NEXT="stamp_end"/>
+        <FIELD NAME="stamp_end" TYPE="int" LENGTH="20" NOTNULL="false" UNSIGNED="true" SEQUENCE="false" PREVIOUS="stamp_start" NEXT="stamp_t_start"/>
+        <FIELD NAME="stamp_t_start" TYPE="char" LENGTH="255" NOTNULL="false" SEQUENCE="false" PREVIOUS="stamp_end" NEXT="stamp_t_end"/>
+        <FIELD NAME="stamp_t_end" TYPE="char" LENGTH="255" NOTNULL="false" SEQUENCE="false" PREVIOUS="stamp_t_start" NEXT="room_reservation_id"/>
+        <FIELD NAME="room_reservation_id" TYPE="int" LENGTH="20" NOTNULL="true" UNSIGNED="false" DEFAULT="0" SEQUENCE="false" COMMENT="Used if room scheduler plugin is installed." PREVIOUS="stamp_t_end"/>
+      </FIELDS>
+      <KEYS>
+        <KEY NAME="primary" TYPE="primary" FIELDS="id"/>
+      </KEYS>
+    </TABLE>
+    <TABLE NAME="comity_planner" COMMENT="Main table for planner module within comity" PREVIOUS="comity_events" NEXT="comity_planner_users">
+      <FIELDS>
+        <FIELD NAME="id" TYPE="int" LENGTH="10" NOTNULL="true" UNSIGNED="true" SEQUENCE="true" NEXT="comity_id"/>
+        <FIELD NAME="comity_id" TYPE="int" LENGTH="20" NOTNULL="true" UNSIGNED="false" SEQUENCE="false" PREVIOUS="id" NEXT="active"/>
+        <FIELD NAME="active" TYPE="int" LENGTH="1" NOTNULL="true" UNSIGNED="false" DEFAULT="1" SEQUENCE="false" COMMENT="0=no 1=yes" PREVIOUS="comity_id" NEXT="name"/>
+        <FIELD NAME="name" TYPE="char" LENGTH="255" NOTNULL="true" SEQUENCE="false" PREVIOUS="active" NEXT="description"/>
+        <FIELD NAME="description" TYPE="text" LENGTH="medium" NOTNULL="false" SEQUENCE="false" PREVIOUS="name"/>
+      </FIELDS>
+      <KEYS>
+        <KEY NAME="primary" TYPE="primary" FIELDS="id"/>
+      </KEYS>
+    </TABLE>
+    <TABLE NAME="comity_planner_users" COMMENT="One entry for each user for each planner instance" PREVIOUS="comity_planner" NEXT="comity_planner_dates">
+      <FIELDS>
+        <FIELD NAME="id" TYPE="int" LENGTH="10" NOTNULL="true" UNSIGNED="true" SEQUENCE="true" NEXT="planner_id"/>
+        <FIELD NAME="planner_id" TYPE="int" LENGTH="20" NOTNULL="true" UNSIGNED="false" SEQUENCE="false" PREVIOUS="id" NEXT="comity_member_id"/>
+        <FIELD NAME="comity_member_id" TYPE="int" LENGTH="20" NOTNULL="true" UNSIGNED="false" SEQUENCE="false" COMMENT="from comity_members" PREVIOUS="planner_id" NEXT="rule"/>
+        <FIELD NAME="rule" TYPE="int" LENGTH="1" NOTNULL="true" UNSIGNED="false" DEFAULT="0" SEQUENCE="false" COMMENT="0=none 1=must be present" PREVIOUS="comity_member_id"/>
+      </FIELDS>
+      <KEYS>
+        <KEY NAME="primary" TYPE="primary" FIELDS="id"/>
+      </KEYS>
+    </TABLE>
+    <TABLE NAME="comity_planner_dates" COMMENT="Selection of dates for each instance of planner" PREVIOUS="comity_planner_users" NEXT="comity_planner_response">
+      <FIELDS>
+        <FIELD NAME="id" TYPE="int" LENGTH="10" NOTNULL="true" UNSIGNED="true" SEQUENCE="true" NEXT="planner_id"/>
+        <FIELD NAME="planner_id" TYPE="int" LENGTH="20" NOTNULL="true" UNSIGNED="false" SEQUENCE="false" COMMENT="from comity_planner" PREVIOUS="id" NEXT="from_time"/>
+        <FIELD NAME="from_time" TYPE="int" LENGTH="20" NOTNULL="true" UNSIGNED="false" SEQUENCE="false" PREVIOUS="planner_id" NEXT="to_time"/>
+        <FIELD NAME="to_time" TYPE="int" LENGTH="20" NOTNULL="true" UNSIGNED="false" SEQUENCE="false" PREVIOUS="from_time"/>
+      </FIELDS>
+      <KEYS>
+        <KEY NAME="primary" TYPE="primary" FIELDS="id"/>
+      </KEYS>
+    </TABLE>
+    <TABLE NAME="comity_planner_response" COMMENT="User responses to each date" PREVIOUS="comity_planner_dates" NEXT="comity_agenda">
+      <FIELDS>
+        <FIELD NAME="id" TYPE="int" LENGTH="10" NOTNULL="true" UNSIGNED="true" SEQUENCE="true" NEXT="planner_user_id"/>
+        <FIELD NAME="planner_user_id" TYPE="int" LENGTH="20" NOTNULL="true" UNSIGNED="false" SEQUENCE="false" COMMENT="from comity_planner_users" PREVIOUS="id" NEXT="planner_date_id"/>
+        <FIELD NAME="planner_date_id" TYPE="int" LENGTH="20" NOTNULL="true" UNSIGNED="false" SEQUENCE="false" COMMENT="from comity_planner_dates" PREVIOUS="planner_user_id" NEXT="response"/>
+        <FIELD NAME="response" TYPE="int" LENGTH="2" NOTNULL="true" UNSIGNED="false" DEFAULT="0" SEQUENCE="false" COMMENT="0=Cannot attend 1=Can attend" PREVIOUS="planner_date_id"/>
+      </FIELDS>
+      <KEYS>
+        <KEY NAME="primary" TYPE="primary" FIELDS="id"/>
+      </KEYS>
+    </TABLE>
+    <TABLE NAME="comity_agenda" COMMENT="Default comment for the table, please edit me" PREVIOUS="comity_planner_response" NEXT="comity_agenda_guests">
+      <FIELDS>
+        <FIELD NAME="id" TYPE="int" LENGTH="10" NOTNULL="true" UNSIGNED="true" SEQUENCE="true" NEXT="comity_id"/>
+        <FIELD NAME="comity_id" TYPE="int" LENGTH="20" NOTNULL="true" UNSIGNED="false" SEQUENCE="false" PREVIOUS="id" NEXT="comity_events_id"/>
+        <FIELD NAME="comity_events_id" TYPE="int" LENGTH="20" NOTNULL="false" UNSIGNED="false" SEQUENCE="false" PREVIOUS="comity_id" NEXT="location"/>
+        <FIELD NAME="location" TYPE="char" LENGTH="255" NOTNULL="false" SEQUENCE="false" PREVIOUS="comity_events_id"/>
+      </FIELDS>
+      <KEYS>
+        <KEY NAME="primary" TYPE="primary" FIELDS="id"/>
+      </KEYS>
+    </TABLE>
+    <TABLE NAME="comity_agenda_guests" COMMENT="Default comment for the table, please edit me" PREVIOUS="comity_agenda" NEXT="comity_agenda_topics">
+      <FIELDS>
+        <FIELD NAME="id" TYPE="int" LENGTH="10" NOTNULL="true" UNSIGNED="true" SEQUENCE="true" NEXT="comity_agenda"/>
+        <FIELD NAME="comity_agenda" TYPE="int" LENGTH="20" NOTNULL="true" UNSIGNED="false" SEQUENCE="false" PREVIOUS="id" NEXT="firstname"/>
+        <FIELD NAME="firstname" TYPE="char" LENGTH="255" NOTNULL="false" SEQUENCE="false" PREVIOUS="comity_agenda" NEXT="lastname"/>
+        <FIELD NAME="lastname" TYPE="char" LENGTH="255" NOTNULL="false" SEQUENCE="false" PREVIOUS="firstname" NEXT="moodleid"/>
+        <FIELD NAME="moodleid" TYPE="int" LENGTH="20" NOTNULL="false" UNSIGNED="false" SEQUENCE="false" PREVIOUS="lastname"/>
+      </FIELDS>
+      <KEYS>
+        <KEY NAME="primary" TYPE="primary" FIELDS="id" NEXT="comity_agenda"/>
+        <KEY NAME="comity_agenda" TYPE="foreign" FIELDS="comity_agenda" REFTABLE="comity_agenda" REFFIELDS="id" PREVIOUS="primary"/>
+      </KEYS>
+    </TABLE>
+    <TABLE NAME="comity_agenda_topics" COMMENT="Default comment for the table, please edit me" PREVIOUS="comity_agenda_guests" NEXT="comity_agenda_motions">
+      <FIELDS>
+        <FIELD NAME="id" TYPE="int" LENGTH="10" NOTNULL="true" UNSIGNED="true" SEQUENCE="true" NEXT="comity_agenda"/>
+        <FIELD NAME="comity_agenda" TYPE="int" LENGTH="20" NOTNULL="true" UNSIGNED="false" SEQUENCE="false" PREVIOUS="id" NEXT="title"/>
+        <FIELD NAME="title" TYPE="char" LENGTH="255" NOTNULL="true" SEQUENCE="false" PREVIOUS="comity_agenda" NEXT="description"/>
+        <FIELD NAME="description" TYPE="text" LENGTH="small" NOTNULL="false" SEQUENCE="false" PREVIOUS="title" NEXT="duration"/>
+        <FIELD NAME="duration" TYPE="char" LENGTH="255" NOTNULL="false" SEQUENCE="false" PREVIOUS="description" NEXT="notes"/>
+        <FIELD NAME="notes" TYPE="text" LENGTH="big" NOTNULL="false" SEQUENCE="false" PREVIOUS="duration" NEXT="filename"/>
+        <FIELD NAME="filename" TYPE="text" LENGTH="small" NOTNULL="false" SEQUENCE="false" PREVIOUS="notes" NEXT="follow_up"/>
+        <FIELD NAME="follow_up" TYPE="text" LENGTH="medium" NOTNULL="false" SEQUENCE="false" PREVIOUS="filename" NEXT="status"/>
+        <FIELD NAME="status" TYPE="char" LENGTH="255" NOTNULL="false" SEQUENCE="false" PREVIOUS="follow_up" NEXT="hidden"/>
+        <FIELD NAME="hidden" TYPE="int" LENGTH="1" NOTNULL="false" UNSIGNED="false" DEFAULT="0" SEQUENCE="false" COMMENT="Check if topic is hidden. This is for default topics." PREVIOUS="status" NEXT="modifiedby"/>
+        <FIELD NAME="modifiedby" TYPE="int" LENGTH="20" NOTNULL="false" UNSIGNED="false" SEQUENCE="false" COMMENT="Userid" PREVIOUS="hidden" NEXT="timemodified"/>
+        <FIELD NAME="timemodified" TYPE="int" LENGTH="20" NOTNULL="false" UNSIGNED="false" SEQUENCE="false" PREVIOUS="modifiedby" NEXT="timecreated"/>
+        <FIELD NAME="timecreated" TYPE="int" LENGTH="20" NOTNULL="false" UNSIGNED="false" SEQUENCE="false" PREVIOUS="timemodified"/>
+      </FIELDS>
+      <KEYS>
+        <KEY NAME="primary" TYPE="primary" FIELDS="id" NEXT="comity_agenda"/>
+        <KEY NAME="comity_agenda" TYPE="foreign" FIELDS="comity_agenda" REFTABLE="comity_agenda" REFFIELDS="id" PREVIOUS="primary"/>
+      </KEYS>
+    </TABLE>
+    <TABLE NAME="comity_agenda_motions" COMMENT="Default comment for the table, please edit me" PREVIOUS="comity_agenda_topics" NEXT="comity_agenda_attendance">
+      <FIELDS>
+        <FIELD NAME="id" TYPE="int" LENGTH="10" NOTNULL="true" UNSIGNED="true" SEQUENCE="true" NEXT="comity_agenda"/>
+        <FIELD NAME="comity_agenda" TYPE="int" LENGTH="20" NOTNULL="true" UNSIGNED="false" SEQUENCE="false" PREVIOUS="id" NEXT="comity_agenda_topics"/>
+        <FIELD NAME="comity_agenda_topics" TYPE="int" LENGTH="20" NOTNULL="false" UNSIGNED="false" SEQUENCE="false" PREVIOUS="comity_agenda" NEXT="motion"/>
+        <FIELD NAME="motion" TYPE="text" LENGTH="medium" NOTNULL="false" SEQUENCE="false" PREVIOUS="comity_agenda_topics" NEXT="motionby"/>
+        <FIELD NAME="motionby" TYPE="int" LENGTH="10" NOTNULL="false" UNSIGNED="false" SEQUENCE="false" PREVIOUS="motion" NEXT="secondedby"/>
+        <FIELD NAME="secondedby" TYPE="int" LENGTH="10" NOTNULL="false" UNSIGNED="false" SEQUENCE="false" PREVIOUS="motionby" NEXT="carried"/>
+        <FIELD NAME="carried" TYPE="int" LENGTH="1" NOTNULL="false" UNSIGNED="false" SEQUENCE="false" PREVIOUS="secondedby" NEXT="unanimous"/>
+        <FIELD NAME="unanimous" TYPE="int" LENGTH="1" NOTNULL="false" UNSIGNED="false" SEQUENCE="false" PREVIOUS="carried" NEXT="yea"/>
+        <FIELD NAME="yea" TYPE="int" LENGTH="3" NOTNULL="false" UNSIGNED="false" SEQUENCE="false" PREVIOUS="unanimous" NEXT="nay"/>
+        <FIELD NAME="nay" TYPE="int" LENGTH="3" NOTNULL="false" UNSIGNED="false" SEQUENCE="false" PREVIOUS="yea" NEXT="abstained"/>
+        <FIELD NAME="abstained" TYPE="int" LENGTH="3" NOTNULL="false" UNSIGNED="false" SEQUENCE="false" PREVIOUS="nay" NEXT="timemodified"/>
+        <FIELD NAME="timemodified" TYPE="int" LENGTH="20" NOTNULL="false" UNSIGNED="false" SEQUENCE="false" PREVIOUS="abstained"/>
+      </FIELDS>
+      <KEYS>
+        <KEY NAME="primary" TYPE="primary" FIELDS="id" NEXT="comity_agenda"/>
+        <KEY NAME="comity_agenda" TYPE="foreign" FIELDS="comity_agenda" REFTABLE="comity_agenda" REFFIELDS="id" PREVIOUS="primary"/>
+      </KEYS>
+    </TABLE>
+    <TABLE NAME="comity_agenda_attendance" COMMENT="Default comment for the table, please edit me" PREVIOUS="comity_agenda_motions" NEXT="comity_agenda_members">
+      <FIELDS>
+        <FIELD NAME="id" TYPE="int" LENGTH="10" NOTNULL="true" UNSIGNED="true" SEQUENCE="true" NEXT="comity_agenda"/>
+        <FIELD NAME="comity_agenda" TYPE="int" LENGTH="20" NOTNULL="true" UNSIGNED="false" SEQUENCE="false" PREVIOUS="id" NEXT="comity_members"/>
+        <FIELD NAME="comity_members" TYPE="int" LENGTH="20" NOTNULL="true" UNSIGNED="false" SEQUENCE="false" PREVIOUS="comity_agenda" NEXT="absent"/>
+        <FIELD NAME="absent" TYPE="int" LENGTH="1" NOTNULL="false" UNSIGNED="false" SEQUENCE="false" PREVIOUS="comity_members" NEXT="unexcused_absence"/>
+        <FIELD NAME="unexcused_absence" TYPE="int" LENGTH="1" NOTNULL="false" UNSIGNED="false" SEQUENCE="false" PREVIOUS="absent" NEXT="notes"/>
+        <FIELD NAME="notes" TYPE="text" LENGTH="small" NOTNULL="false" SEQUENCE="false" PREVIOUS="unexcused_absence"/>
+      </FIELDS>
+      <KEYS>
+        <KEY NAME="primary" TYPE="primary" FIELDS="id"/>
+      </KEYS>
+    </TABLE>
+    <TABLE NAME="comity_agenda_members" COMMENT="Default comment for the table, please edit me" PREVIOUS="comity_agenda_attendance">
+      <FIELDS>
+        <FIELD NAME="id" TYPE="int" LENGTH="10" NOTNULL="true" UNSIGNED="true" SEQUENCE="true" NEXT="comity_id"/>
+        <FIELD NAME="comity_id" TYPE="int" LENGTH="20" NOTNULL="true" UNSIGNED="false" SEQUENCE="false" PREVIOUS="id" NEXT="user_id"/>
+        <FIELD NAME="user_id" TYPE="int" LENGTH="20" NOTNULL="true" UNSIGNED="false" SEQUENCE="false" PREVIOUS="comity_id" NEXT="role_id"/>
+        <FIELD NAME="role_id" TYPE="int" LENGTH="20" NOTNULL="true" UNSIGNED="false" SEQUENCE="false" PREVIOUS="user_id" NEXT="agenda_id"/>
+        <FIELD NAME="agenda_id" TYPE="int" LENGTH="20" NOTNULL="true" UNSIGNED="false" SEQUENCE="false" PREVIOUS="role_id"/>
+      </FIELDS>
+      <KEYS>
+        <KEY NAME="id" TYPE="primary" FIELDS="id"/>
+      </KEYS>
+    </TABLE>
+  </TABLES>
+</XMLDB>
