@@ -391,13 +391,15 @@ $dbman = $DB->get_manager();
 
     }
 
-      if ($oldversion < 2011060300) {
+      if ($oldversion < 2011060301) {
 
 	  //Update for pdf ouptut. Minutes and agenda
+          //Bug fixes - NULL use in lang files
+          //Hard coded mdl_user removed.
 
 
 	 // comity savepoint reached
-        upgrade_mod_savepoint(true, 2011060300, 'comity');
+        upgrade_mod_savepoint(true, 2011060301, 'comity');
 
 	}
 

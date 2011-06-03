@@ -75,9 +75,9 @@ if($administrator = $DB->get_record('comity_members', array('comity_id'=>$id, 'r
 }
 
 //All other members show up here
-$memberssql = 'SELECT mdl_user.id, mdl_user.email, mdl_user.lastname, mdl_user.firstname, mdl_comity_members.comity_id, mdl_comity_members.id
-            FROM mdl_comity_members INNER JOIN mdl_user ON mdl_comity_members.user_id = mdl_user.id
-            WHERE mdl_comity_members.comity_id ='.$id.' AND mdl_comity_members.role_id =3 ORDER BY mdl_user.lastname';
+$memberssql = 'SELECT {user}.id, {user}.email, {user}.lastname, {user}.firstname, {comity_members}.comity_id, {comity_members}.id
+            FROM {comity_members} INNER JOIN {user} ON {comity_members}.user_id = {user}.id
+            WHERE {comity_members}.comity_id ='.$id.' AND {comity_members}.role_id =3 ORDER BY {user}.lastname';
 
 //echo $memberssql;
 //   if($member_check = get_record('comity_members', 'comity_id', $id, 'role_id', 3)){
