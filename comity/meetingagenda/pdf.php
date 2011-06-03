@@ -43,9 +43,10 @@ class pdf_creator  {
         $this->agenda_id = $agenda_id;
         $this->comity_id = $comity_id;
         $this->instance = $cm;
+        
     }
 
-function create_pdf($plain_pdf) {
+function create_pdf($plain_pdf, $pdf_type) {
 global $DB,$CFG;
 
 $pdf = new TCPDF(PDF_PAGE_ORIENTATION, PDF_UNIT, PDF_PAGE_FORMAT, true, 'UTF-8', false);
@@ -96,9 +97,11 @@ $durationInSecs = $End - $Start;
 $duration = formatTime($durationInSecs);
 
 
-
-
-$header_text = get_string('agenda_tab','comity');
+if ($pdf_type == 1){
+  $header_text = get_string('minutes_tab','comity');
+} else {
+  $header_text = get_string('agenda_tab','comity');
+}
 $pdf->SetHeaderData('', '',$header_text, $comity->name."\n".$date);
 $pdf->AddPage();
 
@@ -460,8 +463,11 @@ $pdf->ln(1);$pdf->ln(1);
      
         //Set default values to private variable
         $this->default_toform = $toform;
-
-       $pdf->Output('agenda.pdf', 'd');
+        if ($pdf_type == 1) {
+            $pdf->Output('minutes.pdf', 'd');
+        } else {
+            $pdf->Output('agenda.pdf', 'd');
+        }
     }
 
 

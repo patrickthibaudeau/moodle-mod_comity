@@ -33,6 +33,8 @@ require_once('../lib_comity.php');
 
 $event_id = optional_param('event_id', 0, PARAM_INT); // event ID
 $plain_pdf = optional_param('plain_pdf', 0, PARAM_INT); // event ID
+$pdft = optional_param('pdft', 0, PARAM_INT); // Agenda or Minutes
+
 
 global $DB,$PAGE,$USER;
 
@@ -98,7 +100,7 @@ if ($credentials == 'president' || $credentials == 'vice' || $credentials == 'ad
 
 require_once('pdf.php');
 $pdf = new pdf_creator($event_id, $agenda_id, $comity_id, $cm->instance);
-$pdf->create_pdf($plain_pdf);
+$pdf->create_pdf($plain_pdf, $pdft);
 
 } else {
 

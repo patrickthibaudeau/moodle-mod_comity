@@ -391,6 +391,16 @@ $dbman = $DB->get_manager();
 
     }
 
+      if ($oldversion < 2011060300) {
+
+	  //Update for pdf ouptut. Minutes and agenda
+
+
+	 // comity savepoint reached
+        upgrade_mod_savepoint(true, 2011060300, 'comity');
+
+	}
+
     return $result;
 }
 

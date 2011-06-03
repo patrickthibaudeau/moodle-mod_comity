@@ -631,6 +631,7 @@ print '<span style="display:inline-block; vertical-align:top">'.get_string('save
 print ' <input type="image" id="save_image" SRC="../pix/pdf_icon.gif" VALUE="Submit now"/>';
 print '<input type="hidden" name="event_id" value="'.$event_id.'"/>';
 print '<input type="hidden" name="plain_pdf" value="0"/>';
+print '<input type="hidden" name="pdft" value="1"/>';
 print '</form>';
 print '</div>';
 //------------------------------------------------------------------------------
